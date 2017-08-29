@@ -1,0 +1,22 @@
+{
+  "name": "ls-greenfield",
+  "version": "1.0.0",
+  "description": "LS-Mongo-III & Auth",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mixelpixel/LS-Greenfield.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "Patrick Kennedy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mixelpixel/LS-Greenfield/issues"
+  },
+  "homepage": "https://github.com/mixelpixel/LS-Greenfield#readme"
+}
