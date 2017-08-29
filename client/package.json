@@ -1,0 +1,8 @@
+{
+  "name": "Patrick",
+  "version": "1.0.0",
+  "description": "client handler",
+  "main": "index.js",
+  "author": "Patrick",
+  "license": "MIT"
+}
