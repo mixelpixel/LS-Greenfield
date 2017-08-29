@@ -4,7 +4,8 @@
   "description": "LS-Mongo-III & Auth",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/mixelpixel/LS-Greenfield/issues"
   },
-  "homepage": "https://github.com/mixelpixel/LS-Greenfield#readme"
+  "homepage": "https://github.com/mixelpixel/LS-Greenfield#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.7"
+  }
 }
