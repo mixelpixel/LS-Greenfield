@@ -67,6 +67,7 @@ export default class SingleBlogPost extends Component {
       <div>
         <h4>{title}</h4>
         <h5>{author}</h5>
+        {/* <h5>{author.username}</h5> */}
         {/* <h5>{comments.author}</h5> */}
         <div>{content}</div>
         {comments.map((comment, ind) => {
@@ -77,7 +78,7 @@ export default class SingleBlogPost extends Component {
           <textarea
             onChange={this.handleCommentText}
             value={this.state.comment}
-            placeholder="add comment"
+            placeholder="You got something to say? Say it here!"
           />
           <br/>
           <button className="btn btn-default btn-sm" type="submit" onClick={this.addComment}>Submit Comment</button>
