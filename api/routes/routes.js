@@ -21,7 +21,7 @@ module.exports = (app) => {
   // app.route('/post/:id')
   app.route('/posts/:id')
       .get(postControllers.getPostById)
-      .put(postControllers.updatePostById)
+      // .put(postControllers.updatePostById)
       .put(postControllers.addComment);
 
   // app.route('/posts/:id/comments')
