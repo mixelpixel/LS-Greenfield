@@ -24,18 +24,34 @@ const createPost = (req, res) => {
 }
 
 const listPosts = (req, res) => {
-  Post.find({})
-    .populate()
-    // .populate('_author')
-    // .populate('title', 'author')
-    .exec()
-    .then((newPost) => {
-        res.json(newPost);
-    })
-    .catch((err) => {
-        res.status(STATUS_USER_ERROR);
-        res.json({ stack: err.stack, message: err.message });
+//   Post.find({})
+//     .populate()
+//     // .populate('_author')
+//     // .populate('title', 'author')
+//     .exec()
+//     .then((newPost) => {
+//         res.json(newPost);
+//     })
+//     .catch((err) => {
+//         res.status(STATUS_USER_ERROR);
+//         res.json({ stack: err.stack, message: err.message });
+//     });
+// };
+  Post.find({}, (err, posts) => {
+    if (err) {
+      res.status(422);
+      res.json({'Error finding all the posts: ': err.message});
+      return;
+    }
+    const newPosts = [];
+    posts.forEach((post) => {
+      const postObj = {};
+      postObj.title = post.title;
+      postObj._id = post._id;
+      newPosts.push(postObj);
     });
+    res.json(newPosts);
+  });
 };
 
 const getPostById = (req, res) => {
