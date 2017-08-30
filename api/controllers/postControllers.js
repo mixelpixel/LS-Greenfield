@@ -121,7 +121,7 @@ module.exports = {
   createPost,
   listPosts,
   getPostById,
-  updatePostById,
+  // updatePostById,
   addComment,
   // deletePostById,
 }

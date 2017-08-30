@@ -29,5 +29,5 @@ const PostSchema = new Schema({
   comments: [CommentSchema],
 });
 
-module.exports = mongoose.model('Post', PostSchema);
+module.exports = mongoose.model('Post', PostSchema); // ~~~> "posts"
 // module.exports = model('Post', PostSchema); // <~~~ WHY DOESN'T THIS WORK?????
