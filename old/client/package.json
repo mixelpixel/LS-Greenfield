@@ -1,10 +1,6 @@
 {
   "name": "client",
-  "version": "1.0.0",
-  "description": "client handler",
-  "main": "index.js",
-  "author": "Patrick",
-  "license": "MIT",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.16.2",

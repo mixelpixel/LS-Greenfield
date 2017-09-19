@@ -1,23 +1,23 @@
 const Post = require('../models/postModels');
 
 const createNewPost = (req, res) => {
- const { author, title, content } = req.body;
- const newPost = new Post({ author, title, content });
- newPost.save(newPost, (err, post) => {
-  if (err) {
-    res.status(422);
-    res.json({'Error inserting blog post: ': err.message});
-    return;
-  }
-  res.json(post);
- });
+  const { author, title, content } = req.body;
+  const newPost = new Post({ author, title, content });
+  newPost.save(newPost, (err, post) => {
+    if (err) {
+      res.status(422);
+      res.json({ 'Error inserting blog post: ': err.message });
+      return;
+    }
+    res.json(post);
+  });
 };
 
-const getAllBlogPosts = (req, res) => { 
+const getAllBlogPosts = (req, res) => {
   Post.find({}, (err, posts) => {
     if (err) {
       res.status(422);
-      res.json({'Error finding all the posts: ': err.message});
+      res.json({ 'Error finding all the posts: ': err.message });
       return;
     }
     const newPosts = [];
@@ -38,7 +38,7 @@ const getPostById = (req, res) => {
     .exec((err, post) => {
       if (err) {
         res.status(422);
-        res.json({'Error finding all the posts: ': err.message});
+        res.json({ 'Error finding all the posts: ': err.message });
         return;
       }
       res.json(post);
@@ -54,7 +54,7 @@ const addCommentsToPost = (req, res) => {
     post.save((secondError, newSavePost) => {
       if (secondError) {
         res.status(422);
-        res.json({'Error inserting into comments: ': secondError.message});
+        res.json({ 'Error inserting into comments: ': secondError.message });
         return;
       }
       Post.findById(newSavePost._id)
@@ -62,7 +62,7 @@ const addCommentsToPost = (req, res) => {
         .exec((lastError, lastPost) => {
           if (lastError) {
             res.status(422);
-            res.json({'Error populating and finding:': lastError.message});
+            res.json({ 'Error populating and finding:': lastError.message });
             return;
           }
           res.json(lastPost);
