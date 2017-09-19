@@ -1,94 +1,170 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-// const Food = require('../models/food');
+
+const { User } = require('./models/User.js');
+const { Post } = require('./models/Post.js');
 
 const server = express();
 server.use(bodyParser.json());
 
-const STATUS_USER_OK = 200;
-const STATUS_USER_CREATED = 201;
 const STATUS_USER_ERROR = 422;
+const STATUS_SERVER_ERROR = 500;
 
-// HTTP Method returns:
-// https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
-// HELPER FUNCTIONS
-const sendUserError = (err, res) => {
-  res.status(STATUS_USER_ERROR);
-  if (err && err.message) {
-    res.json({ message: err.message, stack: err.stack });
-  } else {
-    res.json({ error: err });
+// routes for users
+server.get('/users', (req, res) => {
+  User.find({}, (err, users) => {
+    if (err) {
+      res.status(STATUS_USER_ERROR);
+      res.json(err);
+    } else {
+      res.json(users);
+    }
+  });
+});
+
+server.post('/users', (req, res) => {
+  const { username } = req.body;
+  if (!username) {
+    res.status(STATUS_USER_ERROR);
+    res.json({ error: 'please provide a username' });
+    return;
   }
-};
+  const user = new User({ username });
+  user.save((err) => {
+    if (err) {
+      res.status(STATUS_SERVER_ERROR);
+      res.json({ error: 'there has been an internal server error' });
+      return;
+    }
+    res.json({ user });
+  });
+});
 
-// $ curl http://localhost:8080/food
-// server.get('/food', (request, response) => {
-//   // Model.find will always return an array
-//   Food.find({}, (err, food) => {
-//     if (err) return response.send(err);
-//     response.send(food);
-//   });
-// });
+server.get('/users/:id', (req, res) => {
+  const { id } = req.params;
+  User.find({_id: id}, (err, user) => {
+    if (err) {
+      res.status(STATUS_SERVER_ERROR);
+      res.json({ error: 'we could not find the user' });
+      return;
+    }
+    res.json(user);
+  });
+});
 
-// $  curl -X POST -H "Content-Type: application/json" -d '{"name":"Hot Dog"}' localhost:8080/food
-// server.post('/food', (request, response) => {
-//   const food = new Food(request.body);
-//   // Promises & mongoose: http://mongoosejs.com/docs/promises.html
-//   food.save((err, newFood) => {
-//     if (err) return response.send(err);
-//     response.status(STATUS_USER_CREATED); // https://http.cat/201
-//     response.send(newFood);
-//   });
-// });
+server.delete('/users/:id', (req, res) => {
+  const { id } = req.params;
+  User.remove({_id: id}, (err, user) => {
+    if (err) {
+      res.status(STATUS_SERVER_ERROR);
+      res.json({ error: 'the id provided does not match any in the db' })
+      return;
+    } else if (user.result.n === 0) {
+      res.json({ error: 'user not found'})
+      return;
+    }
+    res.json(user);
+  });
+});
 
-// $ curl -X PUT -H "Content-Type: application/json" -d '{"name":"Brussel Sprouts","reaction":"yuck"}' localhost:8080/food/reaction
-// https://docs.mongodb.com/manual/reference/method/db.collection.findAndModify/
-// server.put('/food', (request, response) => {
-//   const { name, reaction } = request.body;
-//   Food.findAndModify( // ~~~> NOT A FUNCTION ??????? WHY, WHY - WHY?????????????
-//     { name },
-//     { $set: reaction }, // https://stackoverflow.com/a/24648693/5225057
-//     (err, food) => {
-//       if (err) return response.send('POST Food.find()', err);
-//       food.reaction = reaction;
-//       response.status(200); // https://http.cat/200
-//       response.send(food);
-//     });
-// });
-// https://docs.mongodb.com/manual/reference/method/db.collection.findOneAndUpdate/
-// server.put('/food', (request, response) => {
-//   const { name, reaction } = request.body;
-//   if (!reaction) {
-//     // response.json('WHAT THE FUCK?!?!?!?!?');
-//     sendUserError(`What the heck am I supposed to do with just ${name}?`, response);
-//     return;
-//   }
-//   Food.findOneAndUpdate(
-//     { name },
-//     { $set: { reaction } }, // It took me FOREVER to figure out this setting. MngoDB Docs are not, ah... terribly clear :_(
-//     (err, food) => {
-//       if (err) return response.send('POST Food.findOneAndUpdate()', err);
-//       if (!food) {
-//         sendUserError(`There ain't no "${name}" in the Food database, fool!`, response);
-//         return;
-//       }
-//       food.reaction = reaction;
-//       response.status(STATUS_USER_OK); // https://http.cat/200
-//       response.send(food);
-//     });
-// });
+// routes for blog
+server.get('/posts', (req, res) => {
+  Blog.find({}, (err, post) => {
+    if (err) {
+      res.status(STATUS_USER_ERROR);
+      res.json(err);
+    } else {
+      res.json(post);
+    }
+  });
+});
 
+server.post('/posts', (req, res) => {
+  const { title, contents } = req.body;
+  if (!title || !contents) {
+    res.status(STATUS_USER_ERROR);
+    res.json({ error: 'please provide title and contents' });
+    return;
+  }
+  const post = new Blog({ title, contents });
+  post.save((err) => {
+    if (err) {
+      res.status(STATUS_SERVER_ERROR);
+      res.json({ error: 'there has been an internal server error' });
+      return;
+    }
+    res.json(post);
+  });
+});
 
-// $ curl -X DELETE -H "Content-Type: application/json" -d '{"name":"Hot Dog"}' localhost:8080/food/
-// https://docs.mongodb.com/manual/reference/method/db.collection.remove/
-// server.delete('/food', (request, response) => {
-//   const { name } = request.body;
-//   Food.remove({ name }, (err, removedStatus) => { // "The remove() returns an object that contains the status of the operation."
-//     if (err) return response.send('DELETE Food.remove()', err);
-//     response.status(STATUS_USER_OK);
-//     response.send(removedStatus);
-//   });
-// });
+server.get('/posts/:id', (req, res) => {
+  const { id } = req.params;
+  Blog.find({_id: id}, (err, post) => {
+    if (err) {
+      res.status(STATUS_SERVER_ERROR);
+      res.json({ error: 'we could not find the blog post' });
+      return;
+    }
+    res.json(post);
+  });
+});
 
+server.put('/posts', (req, res) => {
+  res.json({ error: 'Please append an ID# to /posts/#.' });
+});
 
-module.exports = server;
+server.put('/posts/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, contents } = req.body;
+  const updates = { title, contents };
+  if (!title) {
+    res.status(STATUS_USER_ERROR);
+    res.json({ error: 'Please modify the TITLE.' });
+    return;
+  }
+  if (!contents) {
+    res.status(STATUS_USER_ERROR);
+    res.json({ error: 'Please modify the CONTENTS too.' });
+    return;
+  }
+  Blog.updateOne({ _id: id }, updates, (err) => {
+    if (err) {
+      res.status(STATUS_SERVER_ERROR);
+      res.json(`There is no: ${err.value}`);
+    } else {
+      res.json(updates);
+    }
+  });
+});
+
+server.delete('/posts/:id', (req, res) => {
+  const { id } = req.params;
+  Blog.remove({_id: id}, (err, post) => {
+    if (err) {
+      res.status(STATUS_SERVER_ERROR);
+      res.json({ error: 'the id provided does not match any in the db' })
+      return;
+    } else if (post.result.n === 0) {
+      res.json({ error: 'post not found'})
+      return;
+    }
+    res.json(post);
+  });
+});
+
+mongoose.Promise = global.Promise;
+const connect = mongoose.connect(
+  'mongodb://localhost/users',
+  { useMongoClient: true }
+);
+
+connect.then(() => {
+  const port = 3000;
+  server.listen(port);
+  console.log(`Server Listening on ${port}`);
+}, (err) => {
+  console.log('\n************************');
+  console.log("ERROR: Couldn't connect to MongoDB. Do you have it running?");
+  console.log('************************\n');
+});
