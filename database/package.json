@@ -6,7 +6,7 @@
   "bugs": {
     "url": "https://github.com/mixelpixel/LS-Greefield/issues"
   },
-  "description": "simple blogging backend",
+  "description": "simple blogging database",
   "license": "ISC",
   "main": "app.js",
   "repository": {
