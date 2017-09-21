@@ -210,7 +210,7 @@ server.delete('/posts/:id', (req, res) => {
 /* eslint no-console: 0 */
 mongoose.Promise = global.Promise;
 const connect = mongoose.connect('mongodb://localhost/users', { useMongoClient: true }, (err) => {
-  if (err) return console.log('\nyoYOyo-yo!!! WTF, yo??????\n', err);
+  if (err) return console.log('\nyoYOyo-yo!!! WTF, yo??????\n', err.message);
   console.log('DUDE! You are like totally connected to the BLOG DataBase, man!\nLike, all your chakras are, like, totally... cool...\ny\'know, like: lined up and in balance, man... Whoa.\n');
 });
 
@@ -224,7 +224,7 @@ connect.then(() => {
   server.listen(PORT);
   console.log(`Ye Ol' Server is listening on ${PORT}`);
 }, (err) => {
-  console.log('\n************************');
+  console.log('\n***********************************:');
   console.log("ERROR: Couldn't connect to MongoDB.\nDo you have it running?");
-  console.log('************************\n');
+  console.log('***********************************\n');
 });
