@@ -23,8 +23,8 @@ chai.use(chaiHTTP);
 describe('Basic Server', () => {
   describe('[GET] /', () => {
     it('should GET a Hello World confirmation', (done) => {
-      // chai.request(server)
-      chai.request('http://localhost:3000')
+      chai.request(server)
+      // chai.request('http://localhost:3000')
       .get('/')
       .end((err, res) => {
         if (err) return console.log('Are you sure the server and the DB are running?', err.response.error);
@@ -36,20 +36,20 @@ describe('Basic Server', () => {
     });
   });
 
-  describe('[GET] /version', () => {
-    it('should GET a version #', (done) => {
-      // chai.request(server)
-      chai.request('http://localhost:3000')
-      .get('/version')
-      .end((err, res) => {
-        if (err) return console.log('Are you sure the server and the DB are running?', err.response.error);
-        expect(res.status).to.equal(200);
-        expect(typeof res.text).to.equal('string');
-        expect(res.text).to.equal('1.0.0\n');
-        done();
-      });
-    });
-  });
+  // describe('[GET] /version', () => {
+  //   it('should GET a version #', (done) => {
+  //     chai.request(server)
+  //     // chai.request('http://localhost:3000')
+  //     .get('/version')
+  //     .end((err, res) => {
+  //       if (err) return console.log('Are you sure the server and the DB are running?', err.response.error);
+  //       expect(res.status).to.equal(200);
+  //       expect(typeof res.text).to.equal('string');
+  //       expect(res.text).to.equal('1.0.0\n');
+  //       done();
+  //     });
+  //   });
+  // });
 });
 
 // describe('/food', () => {

@@ -13,7 +13,6 @@ const mongoose = require('mongoose');
 const { User } = require('../../database/models/User.js');
 const { Post } = require('../../database/models/Post.js');
 
-
 /* #################################
 *  ENDPOINT SETUP
 *  ################################# */
