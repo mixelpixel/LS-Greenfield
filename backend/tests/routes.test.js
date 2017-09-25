@@ -2,16 +2,16 @@
 const chai = require('chai');
 const chaiHTTP = require('chai-http');
 
-const server = require('../src/app.js');
+// const server = require('../src/app.js');
 
 // mongoose.connect('mongodb://localhost/test'); // ~~~> , { useMongoClient: true }, (err) => {...}
-// /* eslint no-console: 0 */
+/* eslint no-console: 0 */
 // mongoose.connect('mongodb://localhost/test', { useMongoClient: true }, (err) => {
 //   if (err) return console.log(err);
 //   console.log('DUDE! You are like totally connected to the TEST DataBase from the ROUTES tests, man!');
 // });
-// // added to use npm run watch, not sure if this is the best practice?
-// // Wish I had better documentatin than this: https://groups.google.com/forum/?fromgroups=#!topic/mongoose-orm/PXTjqqpaDFk
+// added to use npm run watch, not sure if this is the best practice?
+// Wish I had better documentatin than this: https://groups.google.com/forum/?fromgroups=#!topic/mongoose-orm/PXTjqqpaDFk
 // mongoose.models = {};
 // mongoose.modelSchemas = {};
 // // Promises & mongoose: http://mongoosejs.com/docs/promises.html
@@ -20,14 +20,37 @@ const server = require('../src/app.js');
 const expect = chai.expect;
 chai.use(chaiHTTP);
 
-describe('Basic Server', () => {
+describe('Basic Server app and DB', () => {
+  // beforeEach((done) => {
+  //   // mongoose.Promise = global.Promise;
+  //   // mongoose.models = {};
+  //   // mongoose.modelSchemas = {};
+  //   // mongoose.connect('mongodb://localhost/test', { useMongoClient: true }, (error) => {
+  //   //   if (error) console.error('There\'s an error connecting to MongoDB:\n', error.message);
+  //   //   // console.log('\nNow connected to the MongoDB TEST server');
+  //   //   done();
+  //   // });
+  // });
+
+  // describe('MongoDB', () => {
+  //   it('should connect to the MongoDB TEST server', (done) => {
+  //     chai.request('mongodb://localhost/test')
+  //     .get('/')
+  //     .end((err, res) => {
+  //       if (err) console.log('Something went wrong with the DB', err.response.error);
+  //       expect(res.status).to.equal(200);
+  //       done();
+  //     });
+  //   });
+  // });
+
   describe('[GET] /', () => {
     it('should GET a Hello World confirmation', (done) => {
-      chai.request(server)
-      // chai.request('http://localhost:3000')
+      // chai.request(server)
+      chai.request('http://localhost:3000')
       .get('/')
       .end((err, res) => {
-        if (err) return console.log('Are you sure the server and the DB are running?', err.response.error);
+        if (err) return console.log('Are you sure the server and the DB are running?', err);
         expect(res.status).to.equal(200);
         expect(typeof res.text).to.equal('string');
         expect(res.text).to.equal('Hello World!\n');

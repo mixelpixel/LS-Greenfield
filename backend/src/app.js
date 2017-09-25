@@ -224,7 +224,7 @@ connect.then(() => {
   server.listen(PORT);
   console.log(`Ye Ol' Server is listening on ${PORT}`);
 }, (err) => {
-  console.log('\n***********************************:');
-  console.log("ERROR: Couldn't connect to MongoDB.\nDo you have it running?");
+  console.log('\n***********************************');
+  console.log("ERROR: Couldn't connect to MongoDB.\nADVICE: Start the MongoDB server");
   console.log('***********************************\n');
 });
