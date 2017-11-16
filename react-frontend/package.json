@@ -2,7 +2,9 @@
   "name": "react-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mixelpixel.github.io/LS-Greenfield",
   "dependencies": {
+    "gh-pages": "^1.0.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1"
   },
