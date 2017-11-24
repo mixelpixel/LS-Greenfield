@@ -23,6 +23,7 @@
       "no-return-assign": 0,
       "no-unused-vars": 0,
       "no-useless-constructor": 0,
-      "no-useless-return": 0
+      "no-useless-return": 0,
+      "class-methods-use-this": [1, { "exceptMethods": [render] }]
     }
 }
