@@ -8,7 +8,7 @@ const itemRouter = require('./src/routes/itemRouter'); // custom router module
 const app = express();
 const port = 4200;
 
-mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds145800.mlab.com:45800/blog')
+mongoose.connect('mongodb://mixelpix:mrpdk8228@ds145800.mlab.com:45800/blog', { useMongoClient: true })
   .then(() => {
     console.log('Connected to the mLab MongoDB');
   })
@@ -17,7 +17,7 @@ mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds145800.mlab.com:45800/blog')
     process.exit(1);
   });
 
-app.get('/', (req, res) => res.send('Hello From the Express Server!'));
+// app.get('/', (req, res) => res.send('Hello From the Express Server!'));
 
 app.use(express.static('public'));
 app.use(cors());
