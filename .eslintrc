@@ -24,6 +24,15 @@
       "no-unused-vars": 0,
       "no-useless-constructor": 0,
       "no-useless-return": 0,
-      "class-methods-use-this": [1, { "exceptMethods": [render] }]
+      "class-methods-use-this": [1, { "exceptMethods": [
+            "componentDidMount",
+            "componentDidUpdate",
+            "componentWillMount",
+            "componentWillReceiveProps",
+            "componentWillUnmount",
+            "componentWillUpdate",
+            "render",
+            "shouldComponentUpdate",
+          ] }]
     }
 }
