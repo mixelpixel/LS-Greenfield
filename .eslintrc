@@ -33,6 +33,7 @@
             "componentWillUpdate",
             "render",
             "shouldComponentUpdate",
+            "sendData"
           ] }]
     }
 }
