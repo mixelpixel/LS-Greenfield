@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://mixelpixel.github.io/LS-Greenfield",
   "dependencies": {
+    "axios": "^0.17.1",
     "gh-pages": "^1.0.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
